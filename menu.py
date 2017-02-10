@@ -8,13 +8,13 @@ class Menu(object):
         self.user = input("Enter your author name: ")
         self.user_blog = None
         # Check if they've already got an account
-        if self._user_has_account():  # underscore before method name means it is a private method
-            #  (can only be called by this class)
+        if self._user_has_account():
             print("Welcome back, {}".format(self.user))
         # If not, prompt to create one
         else:
             self._prompt_user_for_account()
 
+    # underscore indicates a private method to be called by this class only
     def _user_has_account(self):
         """Checks if user has an account by searching DB for a blog with author=self.user
         If so, assign this blog to self.user blog and return True. Otherwise, return False"""
@@ -38,25 +38,23 @@ class Menu(object):
     def run_menu(self):
         # Ask user - read or write blogs?
         read_or_write = input("Do you want to read (R) or write (W) blogs? ")
-        # if read:
         if read_or_write == "R":
             self._list_blogs()
             self._view_blog()
-            # display posts
-            pass
-        # if write:
         elif read_or_write == "W":
             self.user_blog.new_post()
         else:
             print("Thank you for blogging!")
 
-    def _list_blogs(self):
+    @staticmethod
+    def _list_blogs():
         blogs = Database.find(collection='blogs',
                               query={})
         for blog in blogs:
             print("ID: {}, Title: {}, Author: {}".format(blog['id'], blog['title'], blog['author']))
 
-    def _view_blog(self):
+    @staticmethod
+    def _view_blog():
         blog_to_see = input("Enter the ID of the blog you'd like to see: ")
         blog = Blog.from_mongo(id=blog_to_see)
         posts = blog.get_posts()

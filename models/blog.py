@@ -42,12 +42,12 @@ class Blog(object):
             'id': self.id
         }
 
-    @classmethod  # Class method returns an instance of the class
+    @classmethod
     def from_mongo(cls, id):
         """Returns a particular blog object from DB"""
         blog_data = Database.find_one(collection='blogs',
                                       query={'id': id})
         return cls(author=blog_data['author'],
-                    title=blog_data['title'],
-                    description=blog_data['description'],
-                    id=blog_data['id'])
+                   title=blog_data['title'],
+                   description=blog_data['description'],
+                   id=blog_data['id'])

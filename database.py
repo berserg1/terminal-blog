@@ -5,7 +5,7 @@ class Database(object):
     URI = "mongodb://127.0.0.1:27017"  # Static variables shared between all Database class instances
     DATABASE = None
 
-    @staticmethod  # This means that a method doesn't take any obligatory params (like self)
+    @staticmethod
     def initialize():
         client = pymongo.MongoClient(Database.URI)
         Database.DATABASE = client['udemypyweb']
